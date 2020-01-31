@@ -84,13 +84,13 @@ class GlassDefaultListArg:
         self.occupied_volume.append(2)
 
 print('=========')
-glass_4_1 = GlassDefaultListArg(200, 100)
+glass_4_1 = GlassDefaultListArg(200)
 print(glass_4_1.occupied_volume)
 
-glass_4_2 = GlassDefaultListArg(200, 200)
+glass_4_2 = GlassDefaultListArg(200)
 print(glass_4_2.occupied_volume)
 
-glass_4_3 = GlassDefaultListArg(200, 200)
+glass_4_3 = GlassDefaultListArg(200)
 print(glass_4_3.occupied_volume)
 
 
@@ -109,7 +109,7 @@ class GlassAddRemove:
         else:
             raise TypeError
         if isinstance(capacity_volume, (int, float)):
-            if occupied_volume > 0:
+            if occupied_volume >= 0:
                 self.occupied_volume = occupied_volume  # объем жидкости
             else:
                 raise ValueError
@@ -128,7 +128,7 @@ class GlassAddRemove:
     def remove_water(self, removing_water):
         pass
 
-glass_5_1 = GlassAddRemove
+glass_5_1 = GlassAddRemove(100)
 glass_5_1.add_water(100)
 
 
