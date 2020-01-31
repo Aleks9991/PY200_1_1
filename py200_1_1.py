@@ -243,6 +243,12 @@ class Node:
 
     def set_prev(self, prev):
         self.__prev = prev
+
+    def get_value(self):
+        pass
+
+    def set_value(self):
+        pass
         
     def __str__(self):
         ...
