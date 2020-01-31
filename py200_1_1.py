@@ -30,6 +30,9 @@ class Glass:
         else:
             raise TypeError
 
+    def get_self_id(self):
+        return hex(id(self))
+
 
 # 2. Создайте два и более объектов типа Glass
 #    Измените и добавьте в любой стакан любое кол-во воды (через атрибуты)
@@ -176,6 +179,18 @@ glass_7_1 = GlassDir(200, 100)
 #    Получите id для каждого объекта с соответсвующим id переменной self.
 
 
+glass_8_1 = Glass(200, 100)
+print(hex(id(glass_8_1)))
+print(glass_8_1.get_self_id())
+print('-----')
+glass_8_2 = Glass(200, 100)
+print(hex(id(glass_8_2)))
+print(glass_8_2.get_self_id())
+print('-----')
+glass_8_3 = Glass(200, 100)
+print(hex(id(glass_8_3)))
+print(glass_8_3.get_self_id())
+
 
 # 9. Корректно ли следующее объявление класса с точки зрения:
 #     - интерпретатора Python;
@@ -189,14 +204,23 @@ class d:
 	def print_me(p):
 		print(p.a)
 		
-d.print_me(d())		
+d.print_me(d())
+
+'''
+ТУТ ВСЕ ОК
+'''
 
 # 10. Исправьте
 class A:
 	def __init__(self, a):
 		if 10 < a < 50:
 			return
-		self.a = a;	
+		self.a = a;
+
+        '''
+        Исправить
+        '''
+
 
 # Объясните так реализовывать __init__ нельзя?
 		
@@ -210,6 +234,10 @@ class Node:
     def __init__(self, prev=None, next_=None):
         self.__prev = prev
         self.__next = next_
+
+        self.public = None
+        self._protect = None
+        self.__private = None
     def set_next(self, next_):
         self.__next = next_
 
@@ -223,7 +251,31 @@ class Node:
         ...
 
 class LinkedList:
+    def __init__(self, nodes=None):
+        if nodes is None:
+            self.head = None
+            self.tail = None
+        elif isinstance(nodes, Node):
+            self.head = nodes
+            self.tail = nodes
+        elif isinstance(nodes, list):
+            self.head = nodes[0]
+            self.tail = nodes[-1]
+            self.linked_nodes(nodes) # связываем пользовательский набор узлов
 
+    def linked_nodes(self, nodes):
+        # Установили ссылки для первого узла
+        nodes[0].set_prev(nodes[-1])
+        nodes[0].set_next(nodes[1])
+
+        # Установили ссылки для середины
+
+        for i in range(1, len(nodes) - 1):
+            nodes[i].set_prev(nodes[i-1])
+            nodes[i].set_next(nodes[i+1])
+
+        nodes[-1].set_prev(nodes[-2])   # TODO Check when lenght of list
+        nodes[-1].set_next(nodes[0])
 
 
     def insert(self, node, index=0):
@@ -240,7 +292,19 @@ class LinkedList:
         Append Node to tail of LinkedList
         node - Node
         '''
-        ...
+        self.tail.set_next(node)
+        node.set_prev(self.tail)
+        self.tail.set_next(self.head)
+        self.head.set_prev(self.tail)
+
+    def append_left(self, node):
+        '''
+        Append Node to tail of LinkedList
+        node - Node
+        '''
+        self.tail.set_next(node)
+        self.tail = node
+        self.tail.set_next(self.head)
 
     def clear(self):
         '''
@@ -259,8 +323,10 @@ class LinkedList:
         ...
 
 
-
-
+node = Node()
+print(node.public)
+print(node._protect)
+print(node.__private)
 
 
 
