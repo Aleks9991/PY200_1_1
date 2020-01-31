@@ -1,5 +1,5 @@
 import unittest
-from py200_1_1 import Glass1
+from py200_1_1 import Glass
 
 
 class MyTestCase(unittest.TestCase):
